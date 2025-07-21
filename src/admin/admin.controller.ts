@@ -14,9 +14,9 @@ import { LoginAdminDto } from './dto/loginAdmin.dto';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  // @Roles(UserRole.ADMIN)
-  // @UseGuards(RoleGuard)
-  // @UseGuards(AuthGuard)
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);
