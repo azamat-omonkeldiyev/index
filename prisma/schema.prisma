@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ADMIN {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  role      UserRole @default(ADMIN)
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  SUPERADMIN
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name_uz   String
+  name_ru   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+enum Status {
+  Рекомендуем
+  Нет_в_наличии
+  Cкидка
+}
+
+enum ToolRu {
+  ФильтрационнаяСистема
+  ВодяныеНасосы
+  СкиммерМусора
+  НагревательВоды
+  ДозаторХимии
+  СистемаОсвещения
+  ЛестницыИПоручни
+  АрматураПодключения
+  ВентилиИМанометры
+  ТермометрыКонтроля
+  ПокрытиеБассейна
+  ИнвентарьДляЧистки
+  ТестНаборыВоды
+  ХимическиеРеагенты
+  РоботПылесос
+  УфСтерилизатор
+  ОзонГенератор
+  ЭлектролизТузлиСув
+}
+
+enum ToolUz {
+  FiltrlovchiTizim
+  SuvNasoslari
+  SirtAxloqYiguvchi
+  SuvIsitgichi
+  KimyoviDozator
+  YoritishTizimi
+  ZinapoyaPoydevorlari
+  UlashArmaturasi
+  VentilManometrlar
+  HaroratNazoratchisi
+  BasseynQopqogi
+  TozalashAnjomlari
+  SuvTestToplamlari
+  KimyoModdalari
+  AvtomatikRobot
+  UltravioletSterilizator
+  OzonUretgichi
+  TuzliSuvElektrolizi
+}
+
+model Product {
+  id              String   @id @default(uuid())
+  image           String
+  category        Category @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  price           Int
+  discountedPrice Int
+  frame_ru        String
+  frame_uz        String
+  size            String
+  depth           Float
+  status          Status   @default(Рекомендуем)
+  tools_ru        ToolRu[] @default([ФильтрационнаяСистема, ВодяныеНасосы])
+  tools_uz        ToolUz[] @default([FiltrlovchiTizim, SuvNasoslari])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  Order           Order[]
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  address   String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Consultation {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Site{
+  id    Int   @id @default(autoincrement())
+  phone String
+  address_ru String
+  address_uz String
+  work_time_ru String
+  work_time_uz String
+  telegram String
+  instagram String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
