@@ -16,6 +16,10 @@ export class CreateProductDto{
   @IsNumber()
   price: number
 
+  @ApiProperty({example: 10})
+  @IsNumber()
+  count: number
+
   @ApiProperty({example: 2200000})
   @IsNumber()
   discountedPrice: number

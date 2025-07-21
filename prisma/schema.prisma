@@ -94,6 +94,7 @@ model Product {
   frame_ru        String
   frame_uz        String
   size            String
+  count      Int? @default(0)
   depth           Float
   status          Status   @default(Рекомендуем)
   tools_ru        ToolRu[] @default([ФильтрационнаяСистема, ВодяныеНасосы])
