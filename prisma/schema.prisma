@@ -111,6 +111,7 @@ model Order {
   address   String
   product   Product  @relation(fields: [productId], references: [id])
   productId String
+  count      Boolean? @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
