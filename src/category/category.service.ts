@@ -65,11 +65,7 @@ export class CategoryService {
             [sortBy]: sortOrder
           },
           include: {
-            _count: {
-              select: {
-                Product: true
-              }
-            }
+            Product: true,
           }
         }),
         this.prisma.category.count({ where })
