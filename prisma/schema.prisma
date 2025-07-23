@@ -94,7 +94,7 @@ model Product {
   frame_ru        String
   frame_uz        String
   size            String
-  count      Int? @default(0)
+  count           Int?     @default(0)
   depth           Float
   status          Status   @default(Рекомендуем)
   tools_ru        ToolRu[] @default([ФильтрационнаяСистема, ВодяныеНасосы])
@@ -111,7 +111,8 @@ model Order {
   address   String
   product   Product  @relation(fields: [productId], references: [id])
   productId String
-  count      Boolean? @default(false)
+  count     Boolean? @default(false)
+  check     Boolean? @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -124,15 +125,15 @@ model Consultation {
   updatedAt DateTime @updatedAt
 }
 
-model Site{
-  id    Int   @id @default(autoincrement())
-  phone String
-  address_ru String
-  address_uz String
+model Site {
+  id           Int      @id @default(autoincrement())
+  phone        String
+  address_ru   String
+  address_uz   String
   work_time_ru String
   work_time_uz String
-  telegram String
-  instagram String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  telegram     String
+  instagram    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
